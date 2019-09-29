@@ -9,13 +9,15 @@
  */
 
 const puppeteer = require('puppeteer');
-const fsOld = require('fs');
-const fs = require('fs-extra');
-const hbs = require('handlebars');
-const path = require('path');
-const pdf = require('pdf-poppler');
-const moment = require('moment');
 const line = require('@line/bot-sdk');
+
+const fsOld = require('fs');
+// const fs = require('fs-extra');
+// const hbs = require('handlebars');
+// const path = require('path');
+// const pdf = require('pdf-poppler');
+// const moment = require('moment');
+
 
 async function buildImage(data, line_id) {
 
