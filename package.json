@@ -27,11 +27,12 @@
 
     "puppeteer": "^1.20.0",
     "fs": "0.0.1-security",
-
     "fs-extra": "^8.1.0",
     "handlebars": "^4.3.4",
     "moment": "^2.24.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+
+    "pdf-poppler": "^0.2.1"
 
     
   }
