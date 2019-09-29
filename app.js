@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 // define path of each routes
-// const genImgRoutes = require("./api/routes/genImgRoutes");
+const genImgRoutes = require("./api/routes/genImgRoutes");
 
 mongoose.connect(
   "mongodb://babykick.site:27017/babyKickDB",
@@ -32,10 +32,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(express.static('uploads'))          // makes 'uploads' folder to public
+app.use(express.static('uploads'))          // makes 'uploads' folder to public
 
 
-// app.use("/gen/img", genImgRoutes);          // Routes which should handle requests
+app.use("/gen/img", genImgRoutes);          // Routes which should handle requests
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

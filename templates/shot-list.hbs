@@ -1,0 +1,150 @@
+<style type="text/css">
+    @font-face {
+        font-family: 'RSU Regular';
+        src: url('../assets/RSU_Regular.ttf') format('truetype');
+    }
+
+    html {
+        height: fit-content;
+        width: 100%;
+    }
+
+    body {
+        font-family: 'RSU Regular';
+        font-weight: 200;
+        width: 100%;
+        height: fit-content;
+        margin-top: 10px;
+        vertical-align: middle;
+        background-image: url("https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/20190117_191057000_iOS.png?alt=media&token=660a3f00-e951-4dbf-9399-8e5344f8dc1a");
+        
+    }
+
+
+    .formargin {
+        margin-bottom: 1px;
+        margin-top: 1px;
+        line-height: 5px;
+        margin-left: 15px;
+    }
+
+    table {
+        width: 100%;
+        margin-left: 15px;
+    }
+
+    table tr td {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+
+    .header {
+        text-align: center;
+        font-size: 19px;
+        margin-top: 5px;
+    }
+
+    .date {
+        text-align: center;
+        margin-bottom: 0px;
+        margin-top: -20px;
+        font-size: 15px;
+    }
+
+    .head_text {
+        font-size: 15px;
+        margin-left: 15px;
+        font-weight: bold;
+        margin-top: 0px;
+        margin-bottom: : 1px
+    }
+
+    .center_img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1px;
+        width: 20%;
+    }
+
+    .babykick_text {
+        line-height: 2px;
+        text-align: center;
+        font-size: 11px;
+        position: fixed;
+        bottom: 0px;
+        margin-left: 30%
+    }
+
+    .logo {
+        width: 15;
+        height: 15;
+        align: middle;
+        position: fixed;
+        bottom: 5px;
+        right: 185px;
+    }
+</style>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <img class='center_img' src='https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/received_728288100953483.png?alt=media&token=077f399a-b072-4efa-8877-dbb5b0df5769'>
+
+    <p class='header'>รายงานการนับลูกดิ้นประจำสัปดาห์</p>
+    <p class='date' style="color:#F1C40F" }>วันที่ {{date_img}}</p>
+    <table>
+        <tr>
+            <td class='head_text' width="30%">
+                วันที่
+            </td>
+            <td class='head_text' width="40%">
+                จำนวนลูกดิ้น
+            </td>
+            <td class='head_text' width="30%">
+                ประเมิน
+            </td>
+        </tr>
+    </table>
+    <p class='formargin'>-------------------------------------------------------------------</p>
+
+    <table>
+        {{#each list_data as |list_data|}}
+        <tr>
+            <td width="30%">
+                {{list_data.date}}
+            </td>
+            <td width="40%">
+                {{list_data.count_amount}}
+            </td>
+            <td width="30%">
+                {{list_data.result}}
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    <p class='formargin'>-------------------------------------------------------------------</p>
+
+
+    <p class='babykick_text'>By BabyKick Bot &nbsp; &nbsp; &nbsp; &nbsp; <img class='logo' src="https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/LINE_icon01.png?alt=media&token=d28c4d95-2ff0-4968-8052-239db348b101"
+            alt="line logo"> @babykick</p>
+
+
+</body>
+
+</html>
+
+
+{{!-- https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/20190117_191057000_iOS.png?alt=media&token=660a3f00-e951-4dbf-9399-8e5344f8dc1a --}}
+
+
+{{!-- atb --}}
+{{!-- https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/bg_2.png?alt=media&token=4f8dcbff-c18f-4a44-90b3-0083a33a32cd --}}
+
+{{!-- background-position: center;
+background-repeat: no-repeat;
+background-size: cover; --}}
