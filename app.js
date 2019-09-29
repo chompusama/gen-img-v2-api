@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 // const genImgRoutes = require("./api/routes/genImgRoutes");
 
 mongoose.connect(
-  "mongodb://atbb.space:27017/babyKickDB",
+  "mongodb://babykick.site:27017/babyKickDB",
   function(err) {
         if(err) throw err;
         console.log('Connect to MongoDB atb successful!')
@@ -32,7 +32,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static('uploads'))          // makes 'uploads' folder to public
+// app.use(express.static('uploads'))          // makes 'uploads' folder to public
 
 
 // app.use("/gen/img", genImgRoutes);          // Routes which should handle requests
