@@ -1,4 +1,8 @@
 <style type="text/css">
+    @font-face {
+        font-family: 'RSU Regular';
+        src: url('../assets/RSU_Regular.ttf') format('truetype');
+    }
 
     html {
         height: fit-content;
@@ -6,14 +10,13 @@
     }
 
     body {
-        
-        font-weight: 200;
+        font-family: 'RSU Regular';
+        font-weight: 300;
         width: 100%;
         height: fit-content;
         margin-top: 10px;
         vertical-align: middle;
         background-image: url("https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/20190117_191057000_iOS.png?alt=media&token=660a3f00-e951-4dbf-9399-8e5344f8dc1a");
-        
     }
 
 
@@ -22,6 +25,7 @@
         margin-top: 1px;
         line-height: 5px;
         margin-left: 15px;
+        font-size: 30px
     }
 
     table {
@@ -32,23 +36,24 @@
     table tr td {
         margin-top: 1px;
         margin-bottom: 1px;
+        font-size: 30px;
     }
 
     .header {
         text-align: center;
-        font-size: 19px;
+        font-size: 32px;
         margin-top: 5px;
     }
 
     .date {
         text-align: center;
         margin-bottom: 0px;
-        margin-top: -20px;
-        font-size: 15px;
+        margin-top: -30px;
+        font-size: 25px;
     }
 
     .head_text {
-        font-size: 15px;
+        font-size: 30px;
         margin-left: 15px;
         font-weight: bold;
         margin-top: 0px;
@@ -59,26 +64,26 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 1px;
+        margin-top: 3px;
         width: 20%;
     }
 
     .babykick_text {
         line-height: 2px;
         text-align: center;
-        font-size: 11px;
+        font-size: 20px;
         position: fixed;
         bottom: 0px;
         margin-left: 30%
     }
 
     .logo {
-        width: 15;
-        height: 15;
+        width: 30;
+        height: 30;
         align: middle;
         position: fixed;
         bottom: 5px;
-        right: 185px;
+        right: 340px;
     }
 </style>
 
@@ -106,7 +111,7 @@
             </td>
         </tr>
     </table>
-    <p class='formargin'>-------------------------------------------------------------------</p>
+    <p class='formargin'>-------------------------------------------------------------------</p></p>
 
     <table>
         {{#each list_data as |list_data|}}
@@ -123,7 +128,7 @@
         </tr>
         {{/each}}
     </table>
-    <p class='formargin'>-------------------------------------------------------------------</p>
+    <p class='formargin'>-------------------------------------------------------------------</p></p>
 
 
     <p class='babykick_text'>By BabyKick Bot &nbsp; &nbsp; &nbsp; &nbsp; <img class='logo' src="https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/LINE_icon01.png?alt=media&token=d28c4d95-2ff0-4968-8052-239db348b101"
@@ -133,3 +138,14 @@
 </body>
 
 </html>
+
+
+{{!-- https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/20190117_191057000_iOS.png?alt=media&token=660a3f00-e951-4dbf-9399-8e5344f8dc1a --}}
+
+
+{{!-- atb --}}
+{{!-- https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/bg_2.png?alt=media&token=4f8dcbff-c18f-4a44-90b3-0083a33a32cd --}}
+
+{{!-- background-position: center;
+background-repeat: no-repeat;
+background-size: cover; --}}

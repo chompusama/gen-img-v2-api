@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const genImgRoutes = require("./api/routes/genImgRoutes");
 
 mongoose.connect(
-  "mongodb://babykick.site:27017/babyKickDB",
+  "mongodb://103.74.254.119:27017/babyKickDB",
   function(err) {
         if(err) throw err;
         console.log('Connect to MongoDB atb successful!')
