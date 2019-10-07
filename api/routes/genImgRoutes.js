@@ -94,13 +94,13 @@ router.post("/", (req, res, next) => {
 
                             if (week_by_date == week) {
                                 var emoji
-                                (arr.result == 'ลูกดิ้นดี' ? emoji = '&#128077' : emoji = '&#128078');
+                                (arr.result == 'ลูกดิ้นดี' ? emoji = ' 👍' : emoji = ' 👎');
 
                                 if (arr.count_type == 'CTT') {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
                                         count_amount: arr.ctt_amount,
-                                        result: arr.result,
+                                        result: arr.result + emoji ,
                                         emoji_code: emoji
                                     }
                                 }
@@ -108,7 +108,7 @@ router.post("/", (req, res, next) => {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
                                         count_amount: arr.sdk_first_meal + ' / ' + arr.sdk_second_meal + ' / ' + arr.sdk_third_meal,
-                                        result: arr.result,
+                                        result: arr.result + emoji,
                                         emoji_code: emoji
                                     }
                                 }
@@ -119,9 +119,20 @@ router.post("/", (req, res, next) => {
                         var resultWeek = {
                             line_id: docs.line_id,
                             date_img: new Date(Date.now()).toLocaleDateString(),
+                            ges_age_week: docs.ges_age_week,
                             list_data: list
                         }
                         // res.status(200).json(resultWeek);
+
+                        dataCollection.findOneAndUpdate({ line_id: req.body.line_id}, {
+                            $inc: {
+                                ges_age_week: 1,
+                            },
+                        }, function (err, docs) {
+                            console.log(err)
+                            console.log(req.body.line_id + ' GENERATE IMAGE : inc ges_age_week successful')
+                        });
+
                         buildImageWeek.buildImage(resultWeek, line_id);
                     }
                     else {

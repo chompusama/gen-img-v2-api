@@ -21,14 +21,8 @@ router.post("/", (req, res, next) => {
 
     res.status(200).send('running');
 
-    // cron.schedule('2 3 * * Mon', () => {   //every monday 03.02 am
-    //     genImage(req.body.line_id);
-    //     console.log(req.body.line_id + ' running cron gen img');
-    // }, {
-    //         scheduled: true,
-    //         timezone: "Asia/Bangkok"
-    //     });
 
+    // call generator
     genImage(req.body.line_id);
 
 
@@ -54,25 +48,10 @@ router.post("/", (req, res, next) => {
                 if (countingLength != 0) {
                     console.log(req.body.line_id + ' GENERATE IMAGE : have arr');
 
-                    // var date = new Date(Date.now());
-                    // Date.prototype.getWeek = function () {
-                    //     var dt = new Date(this.getFullYear(), 0, 1);
-                    //     return Math.ceil((((this - dt) / 86400000) + dt.getDay() + 1) / 7);
-                    // };
-                    // var week = date.getWeek() - 1;           // week of sunday
-                    // console.log(date)
-                    // console.log(date.getWeek())
-                    // console.log(week, '> -1')
-
                     dt = new Date(Date.now());
                     var week = ISO8601_week_no(dt) - 1;
 
-                    // console.log(ISO8601_week_no(dt));
-                    // console.log(week)
-
                     listCounting(week);
-
-                    // listCounting(docs.counting[countingLength - 1].week_by_date);
                 }
                 else {
                     console.log(req.body.line_id + ' GENERATE IMAGE : no array to gen img');
@@ -94,13 +73,13 @@ router.post("/", (req, res, next) => {
 
                             if (week_by_date == week) {
                                 var emoji
-                                (arr.result == 'ลูกดิ้นดี' ? emoji = '&#128077' : emoji = '&#128078');
+                                (arr.result == 'ลูกดิ้นดี' ? emoji = ' 👍' : emoji = ' 👎');
 
                                 if (arr.count_type == 'CTT') {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
                                         count_amount: arr.ctt_amount,
-                                        result: arr.result,
+                                        result: arr.result + emoji ,
                                         emoji_code: emoji
                                     }
                                 }
@@ -108,7 +87,7 @@ router.post("/", (req, res, next) => {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
                                         count_amount: arr.sdk_first_meal + ' / ' + arr.sdk_second_meal + ' / ' + arr.sdk_third_meal,
-                                        result: arr.result,
+                                        result: arr.result + emoji,
                                         emoji_code: emoji
                                     }
                                 }
@@ -119,9 +98,19 @@ router.post("/", (req, res, next) => {
                         var resultWeek = {
                             line_id: docs.line_id,
                             date_img: new Date(Date.now()).toLocaleDateString(),
+                            ges_age_week: docs.ges_age_week,
                             list_data: list
                         }
                         // res.status(200).json(resultWeek);
+                        dataCollection.findOneAndUpdate({ line_id: req.body.line_id}, {
+                            $inc: {
+                                ges_age_week: 1,
+                            },
+                        }, function (err, docs) {
+                            console.log(err)
+                            console.log(req.body.line_id + ' GENERATE IMAGE : inc ges_age_week successful')
+                        });
+
                         buildImageWeek.buildImage(resultWeek, line_id);
                     }
                     else {
