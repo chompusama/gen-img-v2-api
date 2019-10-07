@@ -23,7 +23,7 @@ router.post("/", (req, res, next) => {
 
     // cron.schedule('2 3 * * Mon', () => {   //every monday 03.02 am
     //     genImage(req.body.line_id);
-    //     console.log(req.body.line_id + ' running corn gen img');
+    //     console.log(req.body.line_id + ' running cron gen img');
     // }, {
     //         scheduled: true,
     //         timezone: "Asia/Bangkok"
