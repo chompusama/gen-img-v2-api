@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 // define path of each routes
 const genImgRoutes = require("./api/routes/genImgRoutes");
+const genImgMannualRoutes = require("./api/routes/genImgMannualRoutes");
 
 mongoose.connect(
   "mongodb://103.74.254.119:27017/babyKickDB",
@@ -36,6 +37,7 @@ app.use(express.static('uploads'))          // makes 'uploads' folder to public
 
 
 app.use("/gen/img", genImgRoutes);          // Routes which should handle requests
+app.use("/gen/img/mannual", genImgMannualRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
