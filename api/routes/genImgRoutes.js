@@ -29,7 +29,20 @@ router.post("/", (req, res, next) => {
             timezone: "Asia/Bangkok"
         });
 
-    genImage(req.body.line_id);
+    // genImage(req.body.line_id);
+
+
+    function ISO8601_week_no(dt) {
+        var tdt = new Date(dt.valueOf());
+        var dayn = (dt.getDay() + 6) % 7;
+        tdt.setDate(tdt.getDate() - dayn + 3);
+        var firstThursday = tdt.valueOf();
+        tdt.setMonth(0, 1);
+        if (tdt.getDay() !== 4) {
+            tdt.setMonth(0, 1 + ((4 - tdt.getDay()) + 7) % 7);
+        }
+        return 1 + Math.ceil((firstThursday - tdt) / 604800000);
+    }
 
     function genImage(line_id) {
         dataCollection.findOne({ line_id: req.body.line_id })
@@ -41,12 +54,21 @@ router.post("/", (req, res, next) => {
                 if (countingLength != 0) {
                     console.log(req.body.line_id + ' GENERATE IMAGE : have arr');
 
-                    var date = new Date(Date.now());
-                    Date.prototype.getWeek = function () {
-                        var dt = new Date(this.getFullYear(), 0, 1);
-                        return Math.ceil((((this - dt) / 86400000) + dt.getDay() + 1) / 7);
-                    };
-                    var week = date.getWeek() - 1;           // week of sunday
+                    // var date = new Date(Date.now());
+                    // Date.prototype.getWeek = function () {
+                    //     var dt = new Date(this.getFullYear(), 0, 1);
+                    //     return Math.ceil((((this - dt) / 86400000) + dt.getDay() + 1) / 7);
+                    // };
+                    // var week = date.getWeek() - 1;           // week of sunday
+                    // console.log(date)
+                    // console.log(date.getWeek())
+                    // console.log(week, '> -1')
+
+                    dt = new Date(Date.now());
+                    var week = ISO8601_week_no(dt) - 1;
+
+                    // console.log(ISO8601_week_no(dt));
+                    // console.log(week)
 
                     listCounting(week);
 
@@ -58,13 +80,14 @@ router.post("/", (req, res, next) => {
 
                 // list counting in array
                 function listCounting(week) {
-                    if (docs.timer_status == 'timeout' && docs.counting[(docs.counting.length) - 1].status == 'close') {
+                    // if (docs.timer_status == 'timeout' && docs.counting[(docs.counting.length) - 1].status == 'close') {
+                    if (docs.timer_status == 'timeout') {
 
                         console.log(req.body.line_id + ' GENERATE IMAGE : status it is ok (timeout and close) generating...')
 
                         var list = [];
 
-                        for (var i = 0 ; i < countingLength ; i++) {    // countingLength
+                        for (var i = 0; i < countingLength; i++) {    // countingLength
 
                             var arr = docs.counting[i];
                             var week_by_date = docs.counting[i].week_by_date;
@@ -72,7 +95,7 @@ router.post("/", (req, res, next) => {
                             if (week_by_date == week) {
                                 var emoji
                                 (arr.result == 'ลูกดิ้นดี' ? emoji = '&#128077' : emoji = '&#128078');
-                                
+
                                 if (arr.count_type == 'CTT') {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
@@ -100,6 +123,9 @@ router.post("/", (req, res, next) => {
                         }
                         // res.status(200).json(resultWeek);
                         buildImageWeek.buildImage(resultWeek, line_id);
+                    }
+                    else {
+                        console.log(req.body.line_id + ' GENERATE IMAGE : state is not timeout and close')
                     }
                 }
             })

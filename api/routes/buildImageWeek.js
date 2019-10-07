@@ -20,7 +20,9 @@ const moment = require('moment');
 async function buildImage(data, line_id) {
    
     let server = 'https://api.babykickbot.site';   / change when deployed */
-    // let server = 'https://83bbbd4a.ngrok.io';
+    // let server = 'https://8c1f1bd8.ngrok.io';
+
+    console.log(line_id + ' generating..')
 
     const compile = async function (templateName, data) {
         const filePath = await path.join(process.cwd(), 'templates', `${templateName}.hbs`);
