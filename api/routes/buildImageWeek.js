@@ -19,8 +19,8 @@ const moment = require('moment');
 
 async function buildImage(data, line_id) {
    
-    let server = 'https://api.babykickbot.site';   / change when deployed */
-    // let server = 'https://8c1f1bd8.ngrok.io';
+    let server = 'https://report.babykickbot.site';   / change when deployed */
+    // let server = 'https://ac1c1ba6.ngrok.io';
 
     console.log(line_id + ' generating..')
 
