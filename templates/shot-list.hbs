@@ -36,25 +36,33 @@
         margin-left: 10px;
         margin-top: 1px;
         margin-bottom: 1px;
-        font-size: 27px;
+        font-size: 26px;
     }
 
     .header {
         text-align: center;
         font-size: 30px;
-        margin-top: 5px;
+        margin-top: 2px;
     }
 
     .date {
         text-align: center;
         margin-bottom: 5px;
-        margin-top: -20px;
+        margin-top: 5px;
+        font-size: 23px;
+        font-weight: bold;
+    }
+
+    .age {
+        text-align: center;
+        margin-bottom: 0px;
+        margin-top: -30px;
         font-size: 23px;
         font-weight: bold;
     }
 
     .head_text {
-        font-size: 27px;
+        font-size: 26px;
         margin-left: 15px;
         font-weight: bold;
         margin-top: 10px;
@@ -79,8 +87,8 @@
     }
 
     .logo {
-        width: 30;
-        height: 30;
+        width: 27;
+        height: 27;
         align: middle;
         position: fixed;
         bottom: 5px;
@@ -99,7 +107,9 @@
     <img class='center_img' src='https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/received_728288100953483.png?alt=media&token=077f399a-b072-4efa-8877-dbb5b0df5769'>
 
     <p class='header'>รายงานการนับลูกดิ้นประจำสัปดาห์</p>
-    <p class='date' style="color:#F1C40F" }>วันที่ {{date_img}}  🌸  อายุครรภ์ {{ges_age_week}} สัปดาห์</p>
+    <p class='age'}>อายุครรภ์ {{ges_age_week}} สัปดาห์</p>
+    <p class='date' style="color:#F1C40F" }>วันที่ {{date_start}} - {{date_end}}</p>
+    
     <table>
         <tr>
             <td class='head_text' width="5%">

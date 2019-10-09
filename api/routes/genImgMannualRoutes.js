@@ -13,6 +13,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const line = require('@line/bot-sdk');
 const cron = require('node-cron');
+const moment = require('moment');
 
 const buildImageWeek = require('./buildImageWeek');
 const dataCollection = require("../models/dataModel");
@@ -22,9 +23,11 @@ router.post("/", (req, res, next) => {
     res.status(200).send('running');
 
 
-    // call generator
+    / call json generator */
     genImage(req.body.line_id);
 
+    var endDay = moment().subtract(1, 'days').format("DD/MM/YYYY");         // yesterday because, monday is the day that gen img but end day of week is Sunday
+    var startDay = moment().subtract(7, 'days').format("DD/MM/YYYY");       // previous 7 days 
 
     function ISO8601_week_no(dt) {
         var tdt = new Date(dt.valueOf());
@@ -79,7 +82,7 @@ router.post("/", (req, res, next) => {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
                                         count_amount: arr.ctt_amount,
-                                        result: arr.result + emoji ,
+                                        result: arr.result + emoji,
                                         emoji_code: emoji
                                     }
                                 }
@@ -98,11 +101,13 @@ router.post("/", (req, res, next) => {
                         var resultWeek = {
                             line_id: docs.line_id,
                             date_img: new Date(Date.now()).toLocaleDateString(),
+                            date_start: startDay,
+                            date_end: endDay,
                             ges_age_week: docs.ges_age_week,
                             list_data: list
                         }
                         // res.status(200).json(resultWeek);
-                        dataCollection.findOneAndUpdate({ line_id: req.body.line_id}, {
+                        dataCollection.findOneAndUpdate({ line_id: req.body.line_id }, {
                             $inc: {
                                 ges_age_week: 1,
                             },
@@ -111,6 +116,7 @@ router.post("/", (req, res, next) => {
                             console.log(req.body.line_id + ' GENERATE IMAGE : inc ges_age_week successful')
                         });
 
+                        / call function gen img from another file */
                         buildImageWeek.buildImage(resultWeek, line_id);
                     }
                     else {
@@ -134,3 +140,15 @@ module.exports = router;
 
 //  &#128077
 //  &#128078
+
+ // var yesterday = new Date(Date.now() - 86400000);
+                    // var yesterdayString = yesterday.toLocaleDateString();
+
+                    // previous day
+                    // var days = 7; // Days you want to subtract
+                    // var date = new Date();
+                    // var last = new Date(date.getTime() - (days * 24 * 60 * 60 * 1000));
+                    // var day = last.getDate();
+                    // var month = last.getMonth() + 1;
+                    // var year = last.getFullYear();
+                    // var previousday = day + '/' + month + '/' + year;

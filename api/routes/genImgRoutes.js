@@ -22,6 +22,7 @@ router.post("/", (req, res, next) => {
     res.status(200).send('running');
 
     cron.schedule('5 3 * * Mon', () => {   //every monday 03.05 am
+        / call json generator */
         genImage(req.body.line_id);
         console.log(req.body.line_id + ' running cron gen img');
     }, {
@@ -31,6 +32,9 @@ router.post("/", (req, res, next) => {
 
     // genImage(req.body.line_id);
 
+
+    var endDay = moment().subtract(1, 'days').format("DD/MM/YYYY");         // yesterday because, monday is the day that gen img but end day of week is Sunday
+    var startDay = moment().subtract(7, 'days').format("DD/MM/YYYY");       // previous 7 days 
 
     function ISO8601_week_no(dt) {
         var tdt = new Date(dt.valueOf());
@@ -54,25 +58,10 @@ router.post("/", (req, res, next) => {
                 if (countingLength != 0) {
                     console.log(req.body.line_id + ' GENERATE IMAGE : have arr');
 
-                    // var date = new Date(Date.now());
-                    // Date.prototype.getWeek = function () {
-                    //     var dt = new Date(this.getFullYear(), 0, 1);
-                    //     return Math.ceil((((this - dt) / 86400000) + dt.getDay() + 1) / 7);
-                    // };
-                    // var week = date.getWeek() - 1;           // week of sunday
-                    // console.log(date)
-                    // console.log(date.getWeek())
-                    // console.log(week, '> -1')
-
                     dt = new Date(Date.now());
                     var week = ISO8601_week_no(dt) - 1;
 
-                    // console.log(ISO8601_week_no(dt));
-                    // console.log(week)
-
                     listCounting(week);
-
-                    // listCounting(docs.counting[countingLength - 1].week_by_date);
                 }
                 else {
                     console.log(req.body.line_id + ' GENERATE IMAGE : no array to gen img');
@@ -100,7 +89,7 @@ router.post("/", (req, res, next) => {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
                                         count_amount: arr.ctt_amount,
-                                        result: arr.result + emoji ,
+                                        result: arr.result + emoji,
                                         emoji_code: emoji
                                     }
                                 }
@@ -119,12 +108,13 @@ router.post("/", (req, res, next) => {
                         var resultWeek = {
                             line_id: docs.line_id,
                             date_img: new Date(Date.now()).toLocaleDateString(),
+                            date_start: startDay,
+                            date_end: endDay,
                             ges_age_week: docs.ges_age_week,
                             list_data: list
                         }
                         // res.status(200).json(resultWeek);
-
-                        dataCollection.findOneAndUpdate({ line_id: req.body.line_id}, {
+                        dataCollection.findOneAndUpdate({ line_id: req.body.line_id }, {
                             $inc: {
                                 ges_age_week: 1,
                             },
@@ -133,6 +123,7 @@ router.post("/", (req, res, next) => {
                             console.log(req.body.line_id + ' GENERATE IMAGE : inc ges_age_week successful')
                         });
 
+                        / call function gen img from another file */
                         buildImageWeek.buildImage(resultWeek, line_id);
                     }
                     else {
@@ -153,6 +144,3 @@ router.post("/", (req, res, next) => {
 });
 
 module.exports = router;
-
-//  &#128077
-//  &#128078
