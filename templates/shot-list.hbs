@@ -1,8 +1,5 @@
 <style type="text/css">
-    @font-face {
-        font-family: 'RSU Regular';
-        src: url('../assets/RSU_Regular.ttf') format('truetype');
-    }
+    
 
     html {
         height: fit-content;
@@ -10,7 +7,8 @@
     }
 
     body {
-        font-family: 'RSU Regular';
+        
+        font-family: 'Kanit', sans-serif;
         font-weight: 300;
         width: 100%;
         height: fit-content;
@@ -25,38 +23,41 @@
         margin-top: 1px;
         line-height: 5px;
         margin-left: 15px;
-        font-size: 30px
+        font-size: 20px;
+        font-weight: bold;
     }
 
     table {
         width: 100%;
-        margin-left: 15px;
+        margin-left: 20px;
     }
 
     table tr td {
+        margin-left: 10px;
         margin-top: 1px;
         margin-bottom: 1px;
-        font-size: 30px;
+        font-size: 27px;
     }
 
     .header {
         text-align: center;
-        font-size: 32px;
+        font-size: 30px;
         margin-top: 5px;
     }
 
     .date {
         text-align: center;
-        margin-bottom: 0px;
-        margin-top: -30px;
-        font-size: 25px;
+        margin-bottom: 5px;
+        margin-top: -20px;
+        font-size: 23px;
+        font-weight: bold;
     }
 
     .head_text {
-        font-size: 30px;
+        font-size: 27px;
         margin-left: 15px;
         font-weight: bold;
-        margin-top: 0px;
+        margin-top: 10px;
         margin-bottom: : 1px
     }
 
@@ -71,7 +72,7 @@
     .babykick_text {
         line-height: 2px;
         text-align: center;
-        font-size: 20px;
+        font-size: 18px;
         position: fixed;
         bottom: 0px;
         margin-left: 30%
@@ -83,7 +84,7 @@
         align: middle;
         position: fixed;
         bottom: 5px;
-        right: 340px;
+        right: 310px;
     }
 </style>
 
@@ -91,6 +92,7 @@
 
 <head>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Kanit:300&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -100,10 +102,13 @@
     <p class='date' style="color:#F1C40F" }>วันที่ {{date_img}}  🌸  อายุครรภ์ {{ges_age_week}} สัปดาห์</p>
     <table>
         <tr>
-            <td class='head_text' width="30%">
+            <td class='head_text' width="5%">
+                
+            </td>
+            <td class='head_text' width="27%">
                 วันที่
             </td>
-            <td class='head_text' width="40%">
+            <td class='head_text' width="37%">
                 จำนวนลูกดิ้น
             </td>
             <td class='head_text' width="30%">
@@ -111,24 +116,24 @@
             </td>
         </tr>
     </table>
-    <p class='formargin'>-------------------------------------------------------------------</p></p>
+    <p class='formargin'>----------------------------------------------------------------------</p></p>
 
     <table>
         {{#each list_data as |list_data|}}
         <tr>
-            <td width="30%">
+            <td width="27%">
                 {{list_data.date}}
             </td>
-            <td width="30%">
+            <td width="24%">
                 {{list_data.count_amount}}
             </td>
-            <td width="40%">
+            <td width="30%">
                 {{list_data.result}}
             </td>
         </tr>
         {{/each}}
     </table>
-    <p class='formargin'>-------------------------------------------------------------------</p></p>
+    <p class='formargin'>----------------------------------------------------------------------</p></p>
 
 
     <p class='babykick_text'>By BabyKick Bot &nbsp; &nbsp; &nbsp; &nbsp; <img class='logo' src="https://firebasestorage.googleapis.com/v0/b/sliplessdemo.appspot.com/o/LINE_icon01.png?alt=media&token=d28c4d95-2ff0-4968-8052-239db348b101"
@@ -149,3 +154,10 @@
 {{!-- background-position: center;
 background-repeat: no-repeat;
 background-size: cover; --}}
+
+{{!-- @font-face {
+        font-family: 'RSU Regular';
+        src: url('../assets/RSU_Regular.ttf') format('truetype');
+    } --}}
+
+{{!-- font-family: 'RSU Regular'; --}}
