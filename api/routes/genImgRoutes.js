@@ -13,6 +13,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const line = require('@line/bot-sdk');
 const cron = require('node-cron');
+const moment = require('moment');
 
 const buildImageWeek = require('./buildImageWeek');
 const dataCollection = require("../models/dataModel");
@@ -22,7 +23,7 @@ router.post("/", (req, res, next) => {
     res.status(200).send('running');
 
     cron.schedule('5 3 * * Mon', () => {   //every monday 03.05 am
-        / call json generator */
+        / call json generator * /
         genImage(req.body.line_id);
         console.log(req.body.line_id + ' running cron gen img');
     }, {
@@ -89,7 +90,7 @@ router.post("/", (req, res, next) => {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
                                         count_amount: arr.ctt_amount,
-                                        result: arr.result + emoji,
+                                        result: arr.result,
                                         emoji_code: emoji
                                     }
                                 }
@@ -97,7 +98,7 @@ router.post("/", (req, res, next) => {
                                     var row = {
                                         date: arr.date.toLocaleDateString(),
                                         count_amount: arr.sdk_first_meal + ' / ' + arr.sdk_second_meal + ' / ' + arr.sdk_third_meal,
-                                        result: arr.result + emoji,
+                                        result: arr.result,
                                         emoji_code: emoji
                                     }
                                 }
@@ -112,19 +113,10 @@ router.post("/", (req, res, next) => {
                             date_end: endDay,
                             ges_age_week: docs.ges_age_week,
                             list_data: list
-                        }
-                        // res.status(200).json(resultWeek);
-                        dataCollection.findOneAndUpdate({ line_id: req.body.line_id }, {
-                            $inc: {
-                                ges_age_week: 1,
-                            },
-                        }, function (err, docs) {
-                            console.log(err)
-                            console.log(req.body.line_id + ' GENERATE IMAGE : inc ges_age_week successful')
-                        });
+                        };
 
                         / call function gen img from another file */
-                        buildImageWeek.buildImage(resultWeek, line_id);
+                        buildImageWeek.buildImage(resultWeek, line_id, week);
                     }
                     else {
                         console.log(req.body.line_id + ' GENERATE IMAGE : state is not timeout and close')
