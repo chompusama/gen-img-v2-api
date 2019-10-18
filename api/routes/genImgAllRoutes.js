@@ -24,9 +24,7 @@ router.post("/", async (req, res, next) => {
 
     res.status(200).send('running');
 
-    // cron.schedule('30 14 * * Mon', async () => {
-
-
+    cron.schedule('5 3 * * Mon', async () => {
 
     var endDay = moment().subtract(1, 'days').format("DD/MM/YYYY");         // yesterday because, monday is the day that gen img but end day of week is Sunday
     var startDay = moment().subtract(7, 'days').format("DD/MM/YYYY");       // previous 7 days 
@@ -63,10 +61,12 @@ router.post("/", async (req, res, next) => {
         array.push(a);
     }
 
+    console.log('all id', array)
+
     const forLoop = async _ => {
         // loop for generate report
         for (var i = 0; i < finalResults.length; i++) {
-            console.log('gen img automatic id ' + array[i]);
+            console.log(array[i] + ' gen img automatic');
 
             await dataCollection.findOne({ line_id: array[i] })
                 .exec()
@@ -98,10 +98,10 @@ router.post("/", async (req, res, next) => {
 
                             var list = [];
 
-                            for (var i = 0; i < countingLength; i++) {    // countingLength
+                            for (var j = 0; j < countingLength; j++) {    // countingLength
 
-                                var arr = docs.counting[i];
-                                var week_by_date = docs.counting[i].week_by_date;
+                                var arr = docs.counting[j];
+                                var week_by_date = docs.counting[j].week_by_date;
 
                                 if (week_by_date == week) {
                                     var emoji
@@ -111,7 +111,7 @@ router.post("/", async (req, res, next) => {
                                         var row = {
                                             date: arr.date.toLocaleDateString(),
                                             count_amount: arr.ctt_amount,
-                                            result: arr.result + emoji,
+                                            result: arr.result,
                                             emoji_code: emoji
                                         }
                                     }
@@ -119,7 +119,7 @@ router.post("/", async (req, res, next) => {
                                         var row = {
                                             date: arr.date.toLocaleDateString(),
                                             count_amount: arr.sdk_first_meal + ' / ' + arr.sdk_second_meal + ' / ' + arr.sdk_third_meal,
-                                            result: arr.result + emoji,
+                                            result: arr.result,
                                             emoji_code: emoji
                                         }
                                     }
@@ -127,8 +127,9 @@ router.post("/", async (req, res, next) => {
                                 }
                             }
 
+                            const arr_element = array[i]
                             var resultWeek = {
-                                line_id: array[i],
+                                line_id: arr_element,
                                 date_img: new Date(Date.now()).toLocaleDateString(),
                                 date_start: startDay,
                                 date_end: endDay,
@@ -137,7 +138,7 @@ router.post("/", async (req, res, next) => {
                             };
 
                             / call function gen img from another file */
-                            buildImageWeek.buildImage(resultWeek, array[i], week);
+                            buildImageWeek.buildImage(resultWeek, arr_element, week);
 
                         }
                         else {
@@ -154,111 +155,11 @@ router.post("/", async (req, res, next) => {
     forLoop()
 
 
-    // }, {
-    //         scheduled: true,
-    //         timezone: "Asia/Bangkok"
-    //     });
+    }, {
+            scheduled: true,
+            timezone: "Asia/Bangkok"
+        });
 
 });
 
 module.exports = router;
-
-
-
-
-
-// / call function gen img from another file */
-//                             // await buildImageWeek.buildImage(resultWeek, array[i], week);
-//                             let server = 'https://f9d14e1a.ngrok.io';
-
-//                             console.log(array[i] + ' generating..')
-
-//                             const compile = async function (templateName, resultWeek) {
-//                                 const filePath = await path.join(process.cwd(), 'templates', `${templateName}.hbs`);
-//                                 const html = await fs.readFile(filePath, 'utf-8');
-//                                 return await hbs.compile(html)(resultWeek);
-//                             };
-
-//                             hbs.registerHelper('dateFormat', function (value, format) {
-//                                 return moment(value).format(format);
-//                             });
-
-//                             (async function () {
-//                                 try {
-
-//                                     //file name
-//                                     let date = new Date(Date.now());
-//                                     let d = date.getDate();
-//                                     let m = date.getMonth() + 1;
-//                                     let y = date.getFullYear();
-//                                     let hr = date.getHours();
-//                                     let mm = date.getMinutes();
-//                                     let sec = date.getSeconds();
-//                                     let sDate = d + '-' + m + '-' + y;
-//                                     let sTime = hr + '-' + mm + '-' + sec;
-
-//                                     let fileout = 'uploads/' + array[i] + 'x' + sDate + 'x' + sTime;
-//                                     let pathImg = fileout + '.jpg'
-//                                     let nameImg = '/' + array[i] + 'x' + sDate + 'x' + sTime + '.jpg';
-
-
-//                                     //open html by puppeteer
-//                                     const browser = await puppeteer.launch({
-//                                         defaultViewport: { width: 720, height: 720 }
-//                                     });
-//                                     const page = await browser.newPage();
-
-//                                     //use short-list as content
-//                                     const content = await compile('shot-list', resultWeek);
-//                                     await page.setContent(content);
-//                                     await page.emulateMedia('screen');
-//                                     await page.screenshot({
-//                                         path: pathImg,
-//                                         quality: 100
-//                                     });
-
-//                                     console.log('done');
-//                                     await browser.close();
-
-//                                     var imgLink = server + nameImg;
-//                                     // var imgLink = server + '/screen.jpg';
-
-//                                     // / push message to line */
-//                                     // const client = new line.Client({
-//                                     //     channelAccessToken: 'SCtu4U76N1oEXS3Ahq1EX9nBNkrtbKGdn8so1vbUZaBIXfTlxGqMldJ3Ego3GscxKGUB7MlfR3DHtTbg6hrYPGU9reSTBcCSiChuKmDCMx4FTtIPXzivaYUi3I6Yk1u/yF5k85Le0IUFrkBNxaETxFGUYhWQfeY8sLGRXgo3xvw='
-//                                     // });
-//                                     // const message = await [
-//                                     //     {
-//                                     //         type: 'text',
-//                                     //         text: 'รายงานการนับลูกดิ้นค่ะ'
-//                                     //     },
-//                                     //     {
-//                                     //         type: "image",
-//                                     //         originalContentUrl: imgLink,
-//                                     //         previewImageUrl: imgLink
-//                                     //     }
-//                                     // ]
-//                                     // await client.pushMessage(line_id, message)
-//                                     //     .then(() => {
-//                                     //         console.log(line_id + ' GENERATE IMAGE : push image done!')
-
-//                                     //         dataCollection.findOneAndUpdate({ line_id: line_id }, {
-//                                     //             $inc: {
-//                                     //                 ges_age_week: 1,
-//                                     //             },
-//                                     //             $set: {
-//                                     //                 week_current: week
-//                                     //             }
-//                                     //         }, function (err, docs) {
-//                                     //             console.log(err)
-//                                     //             console.log(line_id + ' GENERATE IMAGE : inc ges_age_week successful')
-//                                     //         });
-//                                     //     })
-//                                     //     .catch((err) => {
-//                                     //         console.log(err);   // error when use fake line id 
-//                                     //     });
-
-//                                 } catch (e) {
-//                                     console.log('our error', e);
-//                                 }
-//                             });
