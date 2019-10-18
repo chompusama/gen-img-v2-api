@@ -7,13 +7,14 @@ const mongoose = require("mongoose");
 // define path of each routes
 const genImgRoutes = require("./api/routes/genImgRoutes");
 const genImgMannualRoutes = require("./api/routes/genImgMannualRoutes");
+const genImgAllRoutes = require("./api/routes/genImgAllRoutes");
 
 mongoose.connect(
   "mongodb://103.74.254.119:27017/babyKickDB",
-  function(err) {
-        if(err) throw err;
-        console.log('Connect to MongoDB atb successful!')
-    }
+  function (err) {
+    if (err) throw err;
+    console.log('Connect to MongoDB atb successful!')
+  }
 );
 
 app.use(morgan("dev"));
@@ -38,6 +39,7 @@ app.use(express.static('uploads'))          // makes 'uploads' folder to public
 
 app.use("/gen/img", genImgRoutes);          // Routes which should handle requests
 app.use("/gen/img/mannual", genImgMannualRoutes);
+app.use("/all/gen/img", genImgAllRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
