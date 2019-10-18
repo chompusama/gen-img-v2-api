@@ -17,7 +17,7 @@ const hbs = require('handlebars');
 const path = require('path');
 const moment = require('moment');
 
-async function buildImage(data, line_id) {
+async function buildImage(data, line_id, week) {
    
     let server = 'https://report.babykickbot.site';   / change when deployed */
     // let server = 'https://ac1c1ba6.ngrok.io';
@@ -68,34 +68,34 @@ async function buildImage(data, line_id) {
                 quality: 100
             });
 
-            console.log('done');
+            console.log(line_id, 'done');
             await browser.close();
 
             var imgLink = server + nameImg;
             // var imgLink = server + '/screen.jpg';
 
             / push message to line */
-            const client = new line.Client({
-                channelAccessToken: 'SCtu4U76N1oEXS3Ahq1EX9nBNkrtbKGdn8so1vbUZaBIXfTlxGqMldJ3Ego3GscxKGUB7MlfR3DHtTbg6hrYPGU9reSTBcCSiChuKmDCMx4FTtIPXzivaYUi3I6Yk1u/yF5k85Le0IUFrkBNxaETxFGUYhWQfeY8sLGRXgo3xvw='
-            });
-            const message = await [
-                {
-                    type: 'text',
-                    text: 'รายงานการนับลูกดิ้นค่ะ'
-                },
-                {
-                    type: "image",
-                    originalContentUrl: imgLink,
-                    previewImageUrl: imgLink
-                }
-            ]
-            await client.pushMessage(line_id, message)
-                .then(() => {
-                    console.log(line_id + ' GENERATE IMAGE : push image done!')
-                })
-                .catch((err) => {
-                    console.log(err);   // error when use fake line id 
-                });
+            // const client = new line.Client({
+            //     channelAccessToken: 'SCtu4U76N1oEXS3Ahq1EX9nBNkrtbKGdn8so1vbUZaBIXfTlxGqMldJ3Ego3GscxKGUB7MlfR3DHtTbg6hrYPGU9reSTBcCSiChuKmDCMx4FTtIPXzivaYUi3I6Yk1u/yF5k85Le0IUFrkBNxaETxFGUYhWQfeY8sLGRXgo3xvw='
+            // });
+            // const message = await [
+            //     {
+            //         type: 'text',
+            //         text: 'รายงานการนับลูกดิ้นค่ะ'
+            //     },
+            //     {
+            //         type: "image",
+            //         originalContentUrl: imgLink,
+            //         previewImageUrl: imgLink
+            //     }
+            // ]
+            // await client.pushMessage(line_id, message)
+            //     .then(() => {
+            //         console.log(line_id + ' GENERATE IMAGE : push image done!')
+            //     })
+            //     .catch((err) => {
+            //         console.log(err);   // error when use fake line id 
+            //     });
 
         } catch (e) {
             console.log('our error', e);
