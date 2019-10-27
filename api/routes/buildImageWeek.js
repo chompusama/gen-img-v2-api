@@ -21,7 +21,7 @@ const dataCollection = require("../models/dataModel");
 
 async function buildImage(data, line_id, week) {
 
-    let server = 'https://report.babykickbot.site'; / change when deployed */
+    let server = 'https://report.babykick.site'; / change when deployed */
     // let server = 'https://ac1c1ba6.ngrok.io';
 
     console.log(line_id + ' generating..')
