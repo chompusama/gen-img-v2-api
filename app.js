@@ -9,11 +9,19 @@ const genImgRoutes = require("./api/routes/genImgRoutes");
 const genImgMannualRoutes = require("./api/routes/genImgMannualRoutes");
 const genImgAllRoutes = require("./api/routes/genImgAllRoutes");
 
+// mongoose.connect(
+//   "mongodb://103.74.254.119:27017/babyKickDB",
+//   function (err) {
+//     if (err) throw err;
+//     console.log('Connect to MongoDB atb 103 successful!')
+//   }
+// );
+
 mongoose.connect(
-  "mongodb://103.74.254.119:27017/babyKickDB",
+  "mongodb://108.160.140.11:27017/babyKickDB",
   function (err) {
     if (err) throw err;
-    console.log('Connect to MongoDB atb successful!')
+    console.log('Connect to MongoDB atb 108 successful!')
   }
 );
 
