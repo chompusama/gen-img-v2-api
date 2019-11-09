@@ -108,9 +108,10 @@ router.post("/", async (req, res, next) => {
                                             var emoji
                                             (arr.result == 'ลูกดิ้นดี' ? emoji = ' 👍' : emoji = ' 👎');
 
+                                            var dateFormatDMY = arr.date.getDate() + '/' + (arr.date.getMonth() + 1) + '/' +  arr.date.getFullYear();
                                             if (arr.count_type == 'CTT') {
                                                 var row = {
-                                                    date: arr.date.toLocaleDateString(),
+                                                    date: dateFormatDMY,
                                                     count_amount: arr.ctt_amount,
                                                     result: arr.result,
                                                     emoji_code: emoji
@@ -118,7 +119,7 @@ router.post("/", async (req, res, next) => {
                                             }
                                             else {
                                                 var row = {
-                                                    date: arr.date.toLocaleDateString(),
+                                                    date: dateFormatDMY,
                                                     count_amount: arr.sdk_first_meal + ' / ' + arr.sdk_second_meal + ' / ' + arr.sdk_third_meal,
                                                     result: arr.result,
                                                     emoji_code: emoji

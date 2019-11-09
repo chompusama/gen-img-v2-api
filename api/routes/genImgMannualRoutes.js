@@ -77,9 +77,27 @@ router.post("/", (req, res, next) => {
                                 var emoji
                                 (arr.result == 'ลูกดิ้นดี' ? emoji = ' 👍' : emoji = ' 👎');
 
+                                // if (arr.count_type == 'CTT') {
+                                //     var row = {
+                                //         date: arr.date.toLocaleDateString(),
+                                //         count_amount: arr.ctt_amount,
+                                //         result: arr.result,
+                                //         emoji_code: emoji
+                                //     }
+                                // }
+                                // else {
+                                //     var row = {
+                                //         date: arr.date.toLocaleDateString(),
+                                //         count_amount: arr.sdk_first_meal + ' / ' + arr.sdk_second_meal + ' / ' + arr.sdk_third_meal,
+                                //         result: arr.result,
+                                //         emoji_code: emoji
+                                //     }
+                                // }
+                                var dateFormatDMY = arr.date.getDate() + '/' + (arr.date.getMonth() + 1) + '/' +  arr.date.getFullYear();
                                 if (arr.count_type == 'CTT') {
+                                     
                                     var row = {
-                                        date: arr.date.toLocaleDateString(),
+                                        date: dateFormatDMY,
                                         count_amount: arr.ctt_amount,
                                         result: arr.result,
                                         emoji_code: emoji
@@ -87,12 +105,13 @@ router.post("/", (req, res, next) => {
                                 }
                                 else {
                                     var row = {
-                                        date: arr.date.toLocaleDateString(),
+                                        date: dateFormatDMY,
                                         count_amount: arr.sdk_first_meal + ' / ' + arr.sdk_second_meal + ' / ' + arr.sdk_third_meal,
                                         result: arr.result,
                                         emoji_code: emoji
                                     }
                                 }
+                                
                                 list.push(row);
                             }
                         }
@@ -106,7 +125,6 @@ router.post("/", (req, res, next) => {
                             list_data: list
                         };
                         // res.status(200).json(resultWeek);
-                        
 
                         / call function gen img from another file */
                         buildImageWeek.buildImage(resultWeek, line_id, week);
