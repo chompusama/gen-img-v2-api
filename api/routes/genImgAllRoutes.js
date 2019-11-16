@@ -78,8 +78,16 @@ router.post("/", async (req, res, next) => {
                             if (docs.week_current < week) {
                                 console.log(docs.week_current + ' and ' + week)
 
-                                if (countingLength != 0) {
-                                    console.log(array[i] + ' GENERATE IMAGE : have arr');
+                                var arr_num = 0;
+                                for (var k = 0; k < countingLength; k++) {
+                                    var week_by_date = docs.counting[k].week_by_date;
+                                    if (week_by_date == week) {
+                                        arr_num++ ;
+                                    }
+                                }
+
+                                if (arr_num != 0) {
+                                    console.log(array[i] + ' GENERATE IMAGE : have arr = ' + arr_num);
 
                                     listCounting(week);
                                 }
@@ -108,7 +116,7 @@ router.post("/", async (req, res, next) => {
                                             var emoji
                                             (arr.result == 'ลูกดิ้นดี' ? emoji = ' 👍' : emoji = ' 👎');
 
-                                            var dateFormatDMY = arr.date.getDate() + '/' + (arr.date.getMonth() + 1) + '/' +  arr.date.getFullYear();
+                                            var dateFormatDMY = arr.date.getDate() + '/' + (arr.date.getMonth() + 1) + '/' + arr.date.getFullYear();
                                             if (arr.count_type == 'CTT') {
                                                 var row = {
                                                     date: dateFormatDMY,
@@ -156,7 +164,7 @@ router.post("/", async (req, res, next) => {
             }
         }
 
-        forLoop()
+        forLoop();
 
 
     }, {
